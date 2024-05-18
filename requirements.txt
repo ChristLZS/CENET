@@ -1,0 +1,6 @@
+datasets==1.0.1
+numpy==1.26.4
+tokenizers==0.19.1
+torch==2.0.1
+tqdm==4.62.3
+transformers==4.40.0
