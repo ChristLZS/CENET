@@ -1,0 +1,25 @@
+Training Configuration: 
+main_dirName: SAVE\ours_hard09-09-2024,22-38-01OURS-EPOCH30
+description: ours_hard
+dataset: OURS
+batch_size: 1024
+max_epochs: 30
+oracle_epochs: 20
+valid_epochs: 5
+alpha: 0.2
+lambdax: 2.0
+embedding_dim: 200
+lr: 0.001
+oracle_lr: 0.001
+oracle_mode: hard
+weight_decay: 1e-05
+dropout: 0.5
+grad_norm: 1.0
+filtering: True
+only_oracle: False
+only_eva: False
+model_dir: 
+save_dir: SAVE
+eva_dir: SAVE
+Training Start 
+===============================

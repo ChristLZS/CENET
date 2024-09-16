@@ -1,10 +1,3 @@
-# Name: main
-# Author: Reacubeth
-# Time: 2021/6/25 17:05
-# Mail: noverfitting@gmail.com
-# Site: www.omegaxyz.com
-# *_*coding:utf-8 *_*
-
 import argparse
 import datetime
 import os
@@ -14,8 +7,8 @@ import time
 import numpy as np
 import torch
 
-import utils
 import test
+import utils
 import valid
 from cenet_model import CENET
 
@@ -27,12 +20,12 @@ if use_cuda:
 else:
     raise NotImplementedError
 
-
 seed = 999
 np.random.seed(seed)
 torch.manual_seed(seed)
 
 
+# 主函数
 def main_portal(args):
     # step 1 数据加载和准备
     settings = {}
@@ -156,11 +149,11 @@ def main_portal(args):
         # 创建文件夹来记录训练过程
         now = datetime.datetime.now()
         dt_string = (
-            args.description
-            + now.strftime("%d-%m-%Y,%H-%M-%S")
-            + args.dataset
-            + "-EPOCH"
-            + str(args.max_epochs)
+                args.description
+                + now.strftime("%d-%m-%Y,%H-%M-%S")
+                + args.dataset
+                + "-EPOCH"
+                + str(args.max_epochs)
         )
         main_dirName = os.path.join(args.save_dir, dt_string)
         if not os.path.exists(main_dirName):
@@ -198,14 +191,14 @@ def main_portal(args):
 
             # 迭代训练数据的批次
             for batch_data in utils.make_batch(
-                train_data,
-                s_history,
-                o_history,
-                train_s_label,
-                train_o_label,
-                train_s_frequency,
-                train_o_frequency,
-                args.batch_size,
+                    train_data,
+                    s_history,
+                    o_history,
+                    train_s_label,
+                    train_o_label,
+                    train_s_frequency,
+                    train_o_frequency,
+                    args.batch_size,
             ):
                 # 将数据转换为张量
                 batch_data[0] = torch.from_numpy(batch_data[0])
@@ -362,14 +355,14 @@ def main_portal(args):
         total_oracle_loss = 0
 
         for batch_data in utils.make_batch(
-            train_data,
-            s_history,
-            o_history,
-            train_s_label,
-            train_o_label,
-            train_s_frequency,
-            train_o_frequency,
-            args.batch_size,
+                train_data,
+                s_history,
+                o_history,
+                train_s_label,
+                train_o_label,
+                train_s_frequency,
+                train_o_frequency,
+                args.batch_size,
         ):
             batch_data[0] = torch.from_numpy(batch_data[0])
             batch_data[3] = torch.from_numpy(batch_data[3]).float()

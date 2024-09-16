@@ -4,17 +4,12 @@
 # Mail: noverfitting@gmail.com
 # Site: www.omegaxyz.com
 # *_*coding:utf-8 *_*
-import torch
+import copy
+
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
 
 from utils import *
-import copy
- 
-# 改进地方：
-# 编码器使用 transformer 编码器
-# 对比学习改成注意力机制，结合规则学习
 
 """
 class Oracle(nn.Module):
@@ -199,7 +194,7 @@ class CENET(nn.Module):
                 o,
                 s,
                 r,
-                self.rel_embeds[self.num_rel :],
+                self.rel_embeds[self.num_rel:],
                 self.linear_pred_layer_o1,
                 self.linear_pred_layer_o2,
                 o_history_tag,
@@ -216,7 +211,7 @@ class CENET(nn.Module):
             o_spc_loss = self.calculate_spc_loss(
                 o,
                 r,
-                self.rel_embeds[self.num_rel :],
+                self.rel_embeds[self.num_rel:],
                 o_history_label_true,
                 o_frequency_hidden,
             )
@@ -251,7 +246,7 @@ class CENET(nn.Module):
                 o,
                 s,
                 r,
-                self.rel_embeds[self.num_rel :],
+                self.rel_embeds[self.num_rel:],
                 self.linear_pred_layer_o1,
                 self.linear_pred_layer_o2,
                 o_history_tag,
@@ -268,7 +263,7 @@ class CENET(nn.Module):
             o_ce_loss, o_pred_history_label, o_ce_all_acc = self.oracle_loss(
                 o,
                 r,
-                self.rel_embeds[self.num_rel :],
+                self.rel_embeds[self.num_rel:],
                 o_history_label_true,
                 o_frequency_hidden,
             )
@@ -377,7 +372,7 @@ class CENET(nn.Module):
             o_ce_loss, _, _ = self.oracle_loss(
                 o,
                 r,
-                self.rel_embeds[self.num_rel :],
+                self.rel_embeds[self.num_rel:],
                 o_history_label_true,
                 o_frequency_hidden,
             )
@@ -406,15 +401,15 @@ class CENET(nn.Module):
 
     # 计算nce loss
     def calculate_nce_loss(
-        self,
-        actor1,
-        actor2,
-        r,
-        rel_embeds,
-        linear1,
-        linear2,
-        history_tag,
-        non_history_tag,
+            self,
+            actor1,
+            actor2,
+            r,
+            rel_embeds,
+            linear1,
+            linear2,
+            history_tag,
+            non_history_tag,
     ):
         preds_raw1 = self.tanh(
             linear1(
@@ -453,19 +448,19 @@ class CENET(nn.Module):
 
     # 计算预测链接任务的性能
     def link_predict(
-        self,
-        nce_loss,
-        preds,
-        ce_loss,
-        actor1,
-        actor2,
-        r,
-        trust_musk,
-        all_triples,
-        pred_known,
-        oracle,
-        history_tag=None,
-        case_study=False,
+            self,
+            nce_loss,
+            preds,
+            ce_loss,
+            actor1,
+            actor2,
+            r,
+            trust_musk,
+            all_triples,
+            pred_known,
+            oracle,
+            history_tag=None,
+            case_study=False,
     ):
         if case_study:
             # f = open("case_study.txt", "a+")
@@ -571,11 +566,11 @@ class CENET(nn.Module):
         dot_product_tempered = torch.mm(projections, projections.T) / 1.0
         # Minus max for numerical stability with exponential. Same done in cross entropy. Epsilon added to avoid log(0)
         exp_dot_tempered = (
-            torch.exp(
-                dot_product_tempered
-                - torch.max(dot_product_tempered, dim=1, keepdim=True)[0]
-            )
-            + 1e-5
+                torch.exp(
+                    dot_product_tempered
+                    - torch.max(dot_product_tempered, dim=1, keepdim=True)[0]
+                )
+                + 1e-5
         )
         mask_similar_class = to_device(
             targets.unsqueeze(1).repeat(1, targets.shape[0]) == targets
@@ -588,7 +583,7 @@ class CENET(nn.Module):
             / (torch.sum(exp_dot_tempered * mask_anchor_out, dim=1, keepdim=True))
         )
         supervised_contrastive_loss_per_sample = (
-            torch.sum(log_prob * mask_combined, dim=1) / cardinality_per_samples
+                torch.sum(log_prob * mask_combined, dim=1) / cardinality_per_samples
         )
 
         supervised_contrastive_loss = torch.mean(supervised_contrastive_loss_per_sample)

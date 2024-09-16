@@ -1,0 +1,17 @@
+Testing starts: 
+Oracle: 
+Subject test MRR (lk): 0.266519
+Subject test MR (lk): 3818.709250
+Subject test Hits (lk) @ 1: 0.261100
+Subject test Hits (lk) @ 3: 0.272833
+Subject test Hits (lk) @ 10: 0.272867
+Object test MRR (lk): 0.267408
+Object test MR (lk): 3818.665017
+Object test Hits (lk) @ 1: 0.263067
+Object test Hits (lk) @ 3: 0.271933
+Object test Hits (lk) @ 10: 0.272867
+ALL test MRR (lk): 0.266964
+ALL test MR (lk): 3818.687133
+ALL test Hits (lk) @ 1: 0.262083
+ALL test Hits (lk) @ 3: 0.272383
+ALL test Hits (lk) @ 10: 0.272867
