@@ -5,12 +5,14 @@
 # Site: www.omegaxyz.com
 # *_*coding:utf-8 *_*
 
+import argparse
 import os
+
 import numpy as np
 import torch
-import argparse
 
 
+# 从指定文件的第一行中读取三个整数
 def get_total_number(inPath, fileName):
     with open(os.path.join(inPath, fileName), "r") as fr:
         for line in fr:
@@ -18,6 +20,7 @@ def get_total_number(inPath, fileName):
             return int(line_split[0]), int(line_split[1]), int(line_split[2])
 
 
+# 从一个或多个文件中加载四元组（头节点、关系、尾节点、时间），并返回这些四元组及其唯一时间的排序列表。
 def load_quadruples(inPath, fileName, fileName2=None, fileName3=None):
     with open(os.path.join(inPath, fileName), "r") as fr:
         quadrupleList = []
@@ -59,35 +62,35 @@ def load_quadruples(inPath, fileName, fileName2=None, fileName3=None):
     return np.asarray(quadrupleList), np.asarray(times)
 
 
-# 生成 batch
+# 生成数据批次，选项上包括验证数据，返回一个生成器，每次生成一个批次的数据
 def make_batch(a, b, c, d, e, f, g, batch_size, valid1=None, valid2=None):
     if valid1 is None and valid2 is None:
         for i in range(0, len(a), batch_size):
             yield [
-                a[i : i + batch_size],
-                b[i : i + batch_size],
-                c[i : i + batch_size],
-                d[i : i + batch_size],
-                e[i : i + batch_size],
-                f[i : i + batch_size],
-                g[i : i + batch_size],
+                a[i: i + batch_size],
+                b[i: i + batch_size],
+                c[i: i + batch_size],
+                d[i: i + batch_size],
+                e[i: i + batch_size],
+                f[i: i + batch_size],
+                g[i: i + batch_size],
             ]
     else:
         for i in range(0, len(a), batch_size):
             yield [
-                a[i : i + batch_size],
-                b[i : i + batch_size],
-                c[i : i + batch_size],
-                d[i : i + batch_size],
-                e[i : i + batch_size],
-                f[i : i + batch_size],
-                g[i : i + batch_size],
-                valid1[i : i + batch_size],
-                valid2[i : i + batch_size],
+                a[i: i + batch_size],
+                b[i: i + batch_size],
+                c[i: i + batch_size],
+                d[i: i + batch_size],
+                e[i: i + batch_size],
+                f[i: i + batch_size],
+                g[i: i + batch_size],
+                valid1[i: i + batch_size],
+                valid2[i: i + batch_size],
             ]
 
 
-# 根据设备转移张量
+# 将张量移动到 GPU 上，如果 GPU 可用的话，否则移动到 CPU 上
 def to_device(tensor):
     if torch.cuda.is_available():
         return tensor.cuda()
@@ -95,20 +98,20 @@ def to_device(tensor):
         return tensor.cpu()
 
 
+# 检查一个列表或嵌套列表是否为空。
 def isListEmpty(inList):
     if isinstance(inList, list):
         return all(map(isListEmpty, inList))
     return False
 
 
+# 获取并排序历史数据（有长度限制），并提取嵌入向量
 def get_sorted_s_r_embed_limit(s_hist, s, r, ent_embeds, limit):
     s_hist_len = to_device(torch.LongTensor(list(map(len, s_hist))))
     s_len, s_idx = s_hist_len.sort(0, descending=True)
     num_non_zero = len(torch.nonzero(s_len))
     s_len_non_zero = s_len[:num_non_zero]
-    s_len_non_zero = torch.where(
-        s_len_non_zero > limit, to_device(torch.tensor(limit)), s_len_non_zero
-    )
+    s_len_non_zero = torch.where(s_len_non_zero > limit, to_device(torch.tensor(limit)), s_len_non_zero)
 
     s_hist_sorted = []
     for idx in s_idx[:num_non_zero]:
@@ -130,6 +133,7 @@ def get_sorted_s_r_embed_limit(s_hist, s, r, ent_embeds, limit):
     return s_idx, s_len_non_zero, s_tem, r_tem, embeds, len_s, embeds_split
 
 
+# 类似于 get_sorted_s_r_embed_limit，但没有长度限制
 def get_sorted_s_r_embed(s_hist, s, r, ent_embeds):
     s_hist_len = to_device(torch.LongTensor(list(map(len, s_hist))))
     s_len, s_idx = s_hist_len.sort(0, descending=True)
@@ -166,6 +170,7 @@ def get_sorted_s_r_embed(s_hist, s, r, ent_embeds):
     return s_idx, s_len_non_zero, s_tem, r_tem, embeds, len_s, embeds_split
 
 
+# 将字符串转换为布尔值
 def str2bool(v: str) -> bool:
     v = v.lower()
     if v == "true":
@@ -176,6 +181,7 @@ def str2bool(v: str) -> bool:
         raise argparse.ArgumentTypeError("Boolean value expected, got" + str(v) + ".")
 
 
+# 将评估指标（MRR、MR、Hits）写入文件并打印
 def write2file(s_ranks, o_ranks, all_ranks, file_test):
     s_ranks = np.asarray(s_ranks)
     s_mr_lk = np.mean(s_ranks)

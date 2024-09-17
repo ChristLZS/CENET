@@ -35,7 +35,8 @@ class Oracle(nn.Module):
 """
 
 
-# 神经网络模型
+# 这个类定义了一个简单的前馈神经网络，用于将输入数据映射到一个输出
+# 使用多个线性层 (nn.Linear)、批归一化 (nn.BatchNorm1d)、Dropout (nn.Dropout) 和 LeakyReLU 激活函数来构建网络
 class Oracle(nn.Module):
     # 初始化函数，定义了模型的基本结构，输入输出维度
     def __init__(self, input_dim, out_dim):
@@ -69,8 +70,8 @@ class CENET(nn.Module):
         self.entity_embeds = nn.Parameter(torch.zeros(self.num_e, args.embedding_dim))
         nn.init.xavier_uniform_(self.entity_embeds, gain=nn.init.calculate_gain("relu"))
 
+        # 定义了多个线性层
         self.linear_frequency = nn.Linear(self.num_e, args.embedding_dim)
-
         self.contrastive_hidden_layer = nn.Linear(
             3 * args.embedding_dim, args.embedding_dim
         )
@@ -121,13 +122,14 @@ class CENET(nn.Module):
 
         print("CENET Initiated")
 
-    # 初始化权重
+    # 权重初始化函数
     @staticmethod
     def weights_init(m):
         if isinstance(m, nn.Linear):
             torch.nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain("relu"))
 
     # 前向传播
+    # 处理了不同模式下的输入数据：训练、验证、测试和 Oracle 模式
     def forward(self, batch_block, mode_lk, total_data=None):
         (
             quadruples,
@@ -378,7 +380,7 @@ class CENET(nn.Module):
             )
             return (s_ce_loss + o_ce_loss) / 2.0 + self.oracle_l1(0.01)
 
-    # 计算 oracle loss
+    # 计算 Oracle 层的损失
     def oracle_loss(self, actor1, r, rel_embeds, history_label, frequency_hidden):
         history_label_pred = F.sigmoid(
             self.oracle_layer(
@@ -399,7 +401,7 @@ class CENET(nn.Module):
         )
         return ce_loss, history_label_pred, ce_accuracy * tmp_label.shape[0]
 
-    # 计算nce loss
+    # 计算对比损失
     def calculate_nce_loss(
             self,
             actor1,
@@ -446,7 +448,7 @@ class CENET(nn.Module):
 
         return nce, preds1 + preds2
 
-    # 计算预测链接任务的性能
+    # 计算链接预测的性能
     def link_predict(
             self,
             nce_loss,
@@ -528,7 +530,7 @@ class CENET(nn.Module):
             reg += torch.sum(torch.abs(param))
         return reg * reg_param
 
-    # 冻结参数
+    # 冻结模型的部分参数以便在训练中不更新
     def freeze_parameter(self):
         self.rel_embeds.requires_grad_(False)
         self.entity_embeds.requires_grad_(False)
@@ -540,7 +542,7 @@ class CENET(nn.Module):
         self.contrastive_hidden_layer.requires_grad_(False)
         self.contrastive_output_layer.requires_grad_(False)
 
-    # 对比层
+    # 定义对比学习的层
     def contrastive_layer(self, x):
         # Implement from the encoder E to the projection network P
         # x = F.normalize(x, dim=1)

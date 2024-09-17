@@ -1,0 +1,81 @@
+Training Configuration: 
+main_dirName: SAVE\ours_hard17-09-2024,15-44-14OURS-EPOCH30
+description: ours_hard
+dataset: OURS
+batch_size: 1024
+max_epochs: 30
+oracle_epochs: 20
+valid_epochs: 5
+alpha: 0.2
+lambdax: 2.0
+embedding_dim: 200
+lr: 0.001
+oracle_lr: 0.001
+oracle_mode: hard
+weight_decay: 1e-05
+dropout: 0.5
+grad_norm: 1.0
+filtering: True
+only_oracle: False
+only_eva: False
+model_dir: 
+save_dir: SAVE
+eva_dir: SAVE
+Training Start 
+===============================
+epoch: 1batch: 0 finished. Used time: 3.3243298530578613, Loss: 7.227765083312988
+epoch: 1batch: 1 finished. Used time: 3.418414831161499, Loss: 6.612452983856201
+epoch: 1batch: 2 finished. Used time: 3.5040841102600098, Loss: 6.6158528327941895
+epoch: 1batch: 3 finished. Used time: 3.587869644165039, Loss: 6.578408718109131
+epoch: 1batch: 4 finished. Used time: 3.670945167541504, Loss: 6.560890197753906
+epoch: 1batch: 5 finished. Used time: 3.754021406173706, Loss: 6.518967151641846
+epoch: 1batch: 6 finished. Used time: 3.835094928741455, Loss: 6.469760894775391
+epoch: 1batch: 7 finished. Used time: 3.9191715717315674, Loss: 6.3906707763671875
+epoch: 1batch: 8 finished. Used time: 4.006961345672607, Loss: 6.285597324371338
+epoch: 1batch: 9 finished. Used time: 4.091047525405884, Loss: 6.178561210632324
+epoch: 1batch: 10 finished. Used time: 4.171120882034302, Loss: 6.102128982543945
+epoch: 1batch: 11 finished. Used time: 4.2511937618255615, Loss: 6.07086181640625
+epoch: 1batch: 12 finished. Used time: 4.32726263999939, Loss: 6.065202713012695
+epoch: 1batch: 13 finished. Used time: 4.410338640213013, Loss: 6.097227096557617
+epoch: 1batch: 14 finished. Used time: 4.4905846118927, Loss: 6.12762975692749
+epoch: 1batch: 15 finished. Used time: 4.563894510269165, Loss: 6.147586822509766
+epoch: 1batch: 16 finished. Used time: 4.635960102081299, Loss: 6.188638687133789
+epoch: 1batch: 17 finished. Used time: 4.71002721786499, Loss: 6.236250877380371
+epoch: 1batch: 18 finished. Used time: 4.782093286514282, Loss: 6.342740058898926
+epoch: 1batch: 19 finished. Used time: 4.856161117553711, Loss: 6.4033589363098145
+epoch: 1batch: 20 finished. Used time: 4.932229518890381, Loss: 6.379683494567871
+epoch: 1batch: 21 finished. Used time: 5.0143046379089355, Loss: 6.323356628417969
+epoch: 1batch: 22 finished. Used time: 5.087384223937988, Loss: 6.3151984214782715
+epoch: 1batch: 23 finished. Used time: 5.160585403442383, Loss: 6.279994964599609
+epoch: 1batch: 24 finished. Used time: 5.235717535018921, Loss: 6.25360631942749
+epoch: 1batch: 25 finished. Used time: 5.308822154998779, Loss: 6.214900493621826
+epoch: 1batch: 26 finished. Used time: 5.378922700881958, Loss: 6.212233543395996
+epoch: 1batch: 27 finished. Used time: 5.4529640674591064, Loss: 6.214931964874268
+epoch: 1batch: 28 finished. Used time: 5.528339385986328, Loss: 6.215914249420166
+epoch: 1batch: 29 finished. Used time: 5.600404739379883, Loss: 6.209255218505859
+epoch: 1batch: 30 finished. Used time: 5.6724700927734375, Loss: 6.203289031982422
+epoch: 1batch: 31 finished. Used time: 5.7472686767578125, Loss: 6.192309379577637
+epoch: 1batch: 32 finished. Used time: 5.821582078933716, Loss: 6.232871055603027
+epoch: 1batch: 33 finished. Used time: 5.895545721054077, Loss: 6.234383583068848
+epoch: 1batch: 34 finished. Used time: 5.9735541343688965, Loss: 6.2537150382995605
+epoch: 1batch: 35 finished. Used time: 6.052570104598999, Loss: 6.252190589904785
+epoch: 1batch: 36 finished. Used time: 6.128558397293091, Loss: 6.239447116851807
+epoch: 1batch: 37 finished. Used time: 6.203542709350586, Loss: 6.237912178039551
+epoch: 1batch: 38 finished. Used time: 6.279577016830444, Loss: 6.242846488952637
+epoch: 1batch: 39 finished. Used time: 6.35452675819397, Loss: 6.255110740661621
+epoch: 1batch: 40 finished. Used time: 6.43363618850708, Loss: 6.224018096923828
+epoch: 1batch: 41 finished. Used time: 6.514243841171265, Loss: 6.185519695281982
+epoch: 1batch: 42 finished. Used time: 6.590312957763672, Loss: 6.186188220977783
+epoch: 1batch: 43 finished. Used time: 6.664380073547363, Loss: 6.182676315307617
+epoch: 1batch: 44 finished. Used time: 6.738447189331055, Loss: 6.204417705535889
+epoch: 1batch: 45 finished. Used time: 6.814517021179199, Loss: 6.205708980560303
+epoch: 1batch: 46 finished. Used time: 6.893588542938232, Loss: 6.17848014831543
+epoch: 1batch: 47 finished. Used time: 6.972660303115845, Loss: 6.1775617599487305
+epoch: 1batch: 48 finished. Used time: 7.045727014541626, Loss: 6.199051856994629
+epoch: 1batch: 49 finished. Used time: 7.121790409088135, Loss: 6.219032287597656
+epoch: 1batch: 50 finished. Used time: 7.195857524871826, Loss: 6.196521282196045
+epoch: 1batch: 51 finished. Used time: 7.2689244747161865, Loss: 6.210592269897461
+epoch: 1batch: 52 finished. Used time: 7.342991352081299, Loss: 6.213766098022461
+epoch: 1batch: 53 finished. Used time: 7.418060302734375, Loss: 6.21236515045166
+epoch: 1batch: 54 finished. Used time: 7.498331308364868, Loss: 6.218696117401123
+epoch: 1batch: 55 finished. Used time: 7.570396900177002, Loss: 6.209068775177002
